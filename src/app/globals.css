@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* Clase .dark en <html> para el modo oscuro (controlado por useTheme) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+
+  --animate-pulse-glow: pulse-glow 3s infinite ease-in-out;
+  --animate-starr-upgrade: starr-upgrade 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  --animate-float: float-gentle 4s ease-in-out infinite;
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow:
+        0 0 15px rgb(234 179 8 / 0.4),
+        0 0 30px rgb(234 179 8 / 0.2);
+    }
+    50% {
+      box-shadow:
+        0 0 30px rgb(234 179 8 / 0.8),
+        0 0 50px rgb(234 179 8 / 0.4);
+    }
+  }
+
+  @keyframes starr-upgrade {
+    0% {
+      transform: scale(0.9) rotate(0deg);
+    }
+    20% {
+      transform: scale(1.18) rotate(-6deg);
+    }
+    40% {
+      transform: scale(1.15) rotate(6deg);
+    }
+    60% {
+      transform: scale(1.1) rotate(-3deg);
+    }
+    80% {
+      transform: scale(1.05) rotate(3deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes float-gentle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+/* ---------- Base ---------- */
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow-x: hidden;
+}
+
+/* ---------- Fondos degradados por tema ---------- */
+
+.bg-celebration-gradient {
+  background: radial-gradient(circle at 50% 15%, #fef3c7 0%, #fffbeb 50%, #fed7aa 100%);
+}
+
+.dark .bg-celebration-gradient {
+  background: radial-gradient(circle at 50% 15%, #1e1b4b 0%, #0f172a 55%, #020617 100%);
+}
+
+/* ---------- Tarjeta de cristal (glassmorphism) ---------- */
+
+.glass-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgb(255 255 255 / 0.88);
+  border: 1px solid rgb(217 119 6 / 0.25);
+  box-shadow:
+    0 25px 50px -12px rgb(217 119 6 / 0.2),
+    inset 0 1px 1px rgb(255 255 255 / 0.9);
+}
+
+.dark .glass-card {
+  background: rgb(15 23 42 / 0.78);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow:
+    0 25px 50px -12px rgb(0 0 0 / 0.7),
+    inset 0 1px 1px rgb(255 255 255 / 0.15);
+}
