@@ -53,27 +53,27 @@ export function StarrDrop({ stage, onUpgrade, bumpSeed }: Props) {
       >
         {/* Insignia de rareza */}
         <div
-          className={`rounded-full px-5 py-2 text-xs font-black tracking-widest uppercase shadow-xl transition-all duration-300 sm:text-sm ${rarity.badgeClass}`}
+          className={`font-serif rounded-full px-5 py-2 text-xs font-semibold tracking-widest uppercase shadow-xl transition-all duration-300 sm:text-sm ${rarity.badgeClass}`}
         >
           {rarity.label}
         </div>
 
         {/* Caja de regalo */}
         <div
-          className={`relative my-4 animate-bounce text-8xl transition-all duration-300 sm:text-9xl md:text-[10rem] ${rarity.glowClass}`}
+          className={`relative my-4 animate-bounce text-8xl transition-all duration-300 drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] sm:text-9xl md:text-[9rem] ${rarity.glowClass}`}
           aria-hidden="true"
         >
           🎁
         </div>
 
         {/* Pista */}
-        <p className="text-center text-sm font-bold text-amber-500 drop-shadow sm:text-base dark:text-amber-300">
+        <p className="font-serif text-center text-base font-semibold text-amber-600 drop-shadow sm:text-lg dark:text-amber-300">
           {rarity.hint}
         </p>
 
         <div className="mt-2 flex items-center justify-center gap-2">
-          <span className="h-3 w-3 animate-ping rounded-full bg-blue-400" />
-          <span className="text-xs font-bold text-slate-600 dark:text-slate-200">
+          <span className="h-3 w-3 animate-ping rounded-full bg-fiesta-cyan" />
+          <span className="text-sm font-bold text-slate-600 dark:text-slate-200">
             ¡Toca aquí para abrir!
           </span>
         </div>

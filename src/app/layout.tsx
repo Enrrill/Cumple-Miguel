@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Fredoka, Nunito } from "next/font/google";
 
 import { AudioProvider } from "@/components/audio/AudioProvider";
 
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Display redondeada y divertida para títulos (fiesta)
+const fredoka = Fredoka({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+// Cuerpo redondeado y legible
+const nunito = Nunito({
+  variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${inter.variable} ${playfair.variable} dark`}
+      className={`${fredoka.variable} ${nunito.variable} dark`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

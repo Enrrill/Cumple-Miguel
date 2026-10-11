@@ -1,4 +1,4 @@
-import { FLOATING_EMOJIS, PARTICLE_COLORS } from "@/lib/constants";
+import { FESTIVE_PALETTE, FLOATING_EMOJIS, PARTICLE_COLORS } from "@/lib/constants";
 
 type CanvasCtx = CanvasRenderingContext2D;
 
@@ -49,6 +49,53 @@ class Particle {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
+  }
+}
+
+/** Fondo de confeti que cae de forma continua y suave. */
+class ConfettiBit {
+  private x: number;
+  private y: number;
+  private readonly w: number;
+  private readonly h: number;
+  private readonly color: string;
+  private readonly speed: number;
+  private readonly sway: number;
+  private swayPhase: number;
+  private readonly rotation: number;
+  private angle = 0;
+
+  constructor(startAnywhere: boolean) {
+    this.x = randomBetween(0, window.innerWidth);
+    this.y = startAnywhere ? randomBetween(0, window.innerHeight) : -20;
+    this.w = randomBetween(5, 9);
+    this.h = randomBetween(8, 14);
+    this.color = randomItem(FESTIVE_PALETTE);
+    this.speed = randomBetween(0.6, 1.7);
+    this.sway = randomBetween(0.4, 1.3);
+    this.swayPhase = randomBetween(0, Math.PI * 2);
+    this.rotation = randomBetween(-0.03, 0.03);
+  }
+
+  get finished() {
+    return this.y > window.innerHeight + 20;
+  }
+
+  update() {
+    this.y += this.speed;
+    this.swayPhase += 0.02;
+    this.x += Math.sin(this.swayPhase) * this.sway;
+    this.angle += this.rotation;
+  }
+
+  draw(ctx: CanvasCtx) {
+    ctx.save();
+    ctx.globalAlpha = 0.85;
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
     ctx.restore();
   }
 }
@@ -105,10 +152,20 @@ class FloatingEmoji {
  */
 export function createParticleEngine(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");
-  if (!ctx) return { celebrate: () => {}, destroy: () => {} };
+  if (!ctx) {
+    return {
+      celebrate: () => {},
+      setAmbient: () => {},
+      setReducedMotion: () => {},
+      destroy: () => {},
+    };
+  }
 
   const particles: Particle[] = [];
   const emojis: FloatingEmoji[] = [];
+  const confetti: ConfettiBit[] = [];
+  let ambientOn = false;
+  let reducedMotion = false;
   let frameId = 0;
 
   const resize = () => {
@@ -118,6 +175,22 @@ export function createParticleEngine(canvas: HTMLCanvasElement) {
 
   const animate = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Confeti ambiente: repone las piezas que salen por abajo
+    if (ambientOn && !reducedMotion) {
+      const target = Math.min(70, Math.floor(window.innerWidth / 22));
+      while (confetti.length < target) confetti.push(new ConfettiBit(true));
+    }
+    for (const c of confetti) {
+      c.update();
+      c.draw(ctx);
+    }
+    for (let i = confetti.length - 1; i >= 0; i--) {
+      if (confetti[i].finished) {
+        // Reaparece por arriba para una lluvia continua
+        confetti[i] = new ConfettiBit(false);
+      }
+    }
 
     for (const p of particles) {
       if (!p.dead) {
@@ -154,11 +227,22 @@ export function createParticleEngine(canvas: HTMLCanvasElement) {
         emojis.push(new FloatingEmoji(x + randomBetween(-15, 15), y));
       }
     },
+    /** Activa o desactiva la lluvia continua de confeti de fondo. */
+    setAmbient(on: boolean) {
+      ambientOn = on;
+      if (!on) confetti.length = 0;
+    },
+    /** Respeta la preferencia del usuario de reducir movimiento. */
+    setReducedMotion(reduced: boolean) {
+      reducedMotion = reduced;
+      if (reduced) confetti.length = 0;
+    },
     destroy() {
       cancelAnimationFrame(frameId);
       window.removeEventListener("resize", resize);
       particles.length = 0;
       emojis.length = 0;
+      confetti.length = 0;
     },
   };
 }

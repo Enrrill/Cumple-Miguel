@@ -111,3 +111,24 @@ export const PARTICLE_COLORS = [
   "#8b5cf6",
   "#f97316",
 ];
+
+/** Paleta festiva para decoración (globos, guirnaldas, confeti ambiente). */
+export const FESTIVE_PALETTE = [
+  "#facc15", // oro
+  "#ec4899", // magenta
+  "#22d3ee", // cian
+  "#a3e635", // lima
+  "#8b5cf6", // violeta
+  "#fb923c", // naranja
+  "#f472b6", // rosa
+] as const;
+
+/** Configuración de los globos flotantes de fondo (anclados en los márgenes). */
+export const BALLOONS = [
+  { left: "2.5%", bottom: "14%", size: 70, color: "#f472b6", delay: 0, drift: "animate-drift-a" },
+  { left: "7%", bottom: "40%", size: 50, color: "#facc15", delay: 1.4, drift: "animate-drift-b" },
+  { left: "3.5%", bottom: "66%", size: 44, color: "#8b5cf6", delay: 2.8, drift: "animate-drift-c" },
+  { left: "91%", bottom: "20%", size: 66, color: "#22d3ee", delay: 0.7, drift: "animate-drift-c" },
+  { left: "88%", bottom: "48%", size: 48, color: "#a3e635", delay: 2.1, drift: "animate-drift-a" },
+  { left: "94%", bottom: "72%", size: 40, color: "#fb923c", delay: 3.3, drift: "animate-drift-b" },
+] as const;

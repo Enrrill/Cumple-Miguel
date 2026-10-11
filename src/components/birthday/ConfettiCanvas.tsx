@@ -24,6 +24,16 @@ export function ConfettiCanvas() {
       playCelebration();
     });
 
+    // Confeti ambiente de fondo, respetando la preferencia de movimiento
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const applyMotion = () => {
+      const reduced = motionQuery.matches;
+      engine.setReducedMotion(reduced);
+      engine.setAmbient(!reduced);
+    };
+    applyMotion();
+    motionQuery.addEventListener("change", applyMotion);
+
     // Clic global: en cualquier parte excepto botones (evita doble disparo)
     const handleGlobalClick = (event: MouseEvent) => {
       if ((event.target as HTMLElement).closest("button")) return;
@@ -38,6 +48,7 @@ export function ConfettiCanvas() {
 
     return () => {
       clearTimeout(welcomeTimer);
+      motionQuery.removeEventListener("change", applyMotion);
       document.removeEventListener("click", handleGlobalClick);
       unsubscribe();
       engine.destroy();

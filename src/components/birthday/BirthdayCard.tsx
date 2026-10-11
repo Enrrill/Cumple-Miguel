@@ -6,6 +6,7 @@ import { AgeBadge } from "@/components/birthday/AgeBadge";
 import { PhotoFrame } from "@/components/birthday/PhotoFrame";
 import { SecretLetter } from "@/components/birthday/SecretLetter";
 import { StarrDrop } from "@/components/birthday/StarrDrop";
+import { Bunting } from "@/components/decor/Bunting";
 import { useStarrDrop } from "@/hooks/useStarrDrop";
 import { fireCelebration } from "@/lib/celebrate";
 import { CELEBRATION, FINAL_STAGE } from "@/lib/constants";
@@ -58,36 +59,49 @@ export function BirthdayCard() {
   };
 
   return (
-    <main className="relative z-10 mx-auto my-auto w-full max-w-3xl px-4 py-4 sm:py-6">
-      <div className="glass-card animate-float relative overflow-hidden rounded-3xl p-6 text-center transition-all duration-300 sm:p-10">
+    <main className="relative z-10 mx-auto my-auto w-full max-w-3xl px-4 py-4 sm:py-6 lg:max-w-6xl">
+      <div className="glass-card animate-float relative overflow-hidden rounded-3xl p-6 text-center transition-all duration-300 sm:p-10 lg:p-12">
         {/* Formas de brillo de fondo */}
         <div className="pointer-events-none absolute -top-16 -right-16 h-36 w-36 rounded-full bg-amber-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-36 w-36 rounded-full bg-indigo-500/20 blur-3xl" />
 
-        <AgeBadge />
+        {/* Guirnalda de banderines en el borde superior */}
+        <Bunting />
 
-        <h1 className="font-serif mb-3 text-3xl leading-tight font-black tracking-tight text-slate-900 sm:text-5xl md:text-6xl dark:text-white">
-          {CELEBRATION.titlePrefix}
-          <br className="sm:hidden" />
-          <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
-            {CELEBRATION.titleHighlight}
-          </span>
-        </h1>
+        {/* Composición en dos columnas a partir de lg: foto | contenido */}
+        <div className="relative z-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+          {/* Columna de contenido */}
+          <div className="flex flex-col items-center">
+            <AgeBadge />
 
-        <p className="mx-auto mb-6 max-w-lg text-sm font-medium text-amber-700 sm:text-lg dark:text-amber-300/90">
-          {CELEBRATION.subtitle}
-        </p>
+            <h1 className="font-serif mb-4 text-4xl leading-[1.05] font-bold tracking-tight text-slate-900 text-balance sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl dark:text-white">
+              {CELEBRATION.titlePrefix}
+              <br />
+              <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent drop-shadow-sm">
+                {CELEBRATION.titleHighlight}
+              </span>
+            </h1>
 
-        <PhotoFrame />
+            <p className="mx-auto mb-6 max-w-lg text-base font-semibold text-amber-700 sm:text-lg dark:text-amber-300/90">
+              {CELEBRATION.subtitle}
+            </p>
 
-        <div
-          className={`transition-all duration-400 ${
-            starrHidden ? "hidden" : starrFading ? "scale-50 opacity-0" : "opacity-100"
-          }`}
-        >
-          <StarrDrop stage={stage} onUpgrade={handleUpgrade} bumpSeed={bumpSeed} />
+            <div
+              className={`w-full transition-all duration-400 ${
+                starrHidden ? "hidden" : starrFading ? "scale-50 opacity-0" : "opacity-100"
+              }`}
+            >
+              <StarrDrop stage={stage} onUpgrade={handleUpgrade} bumpSeed={bumpSeed} />
+            </div>
+          </div>
+
+          {/* Columna de la foto (a la izquierda en PC, orden primero) */}
+          <div className="order-first mb-6 lg:order-none lg:mb-0">
+            <PhotoFrame />
+          </div>
         </div>
 
+        {/* Carta revelada a ancho completo bajo el grid */}
         <SecretLetter revealed={letterRevealed} />
       </div>
     </main>
