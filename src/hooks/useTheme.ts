@@ -14,7 +14,7 @@ function readTheme(): Theme {
 }
 
 function readServerTheme(): Theme {
-  return "dark";
+  return "light";
 }
 
 function subscribe(onChange: () => void) {

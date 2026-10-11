@@ -20,7 +20,6 @@ export function BirthdayCard() {
   const { stage, isComplete, upgrade } = useStarrDrop();
   const [bumpSeed, setBumpSeed] = useState(0);
   const [starrFading, setStarrFading] = useState(false);
-  const [starrHidden, setStarrHidden] = useState(false);
   const [letterRevealed, setLetterRevealed] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -43,7 +42,6 @@ export function BirthdayCard() {
 
           timers.current.push(
             setTimeout(() => {
-              setStarrHidden(true);
               setLetterRevealed(true);
               playReveal();
 
@@ -82,17 +80,25 @@ export function BirthdayCard() {
               </span>
             </h1>
 
-            <p className="mx-auto mb-6 max-w-lg text-base font-semibold text-amber-700 sm:text-lg dark:text-amber-300/90">
+            <p className="mx-auto mb-8 max-w-lg text-base font-semibold text-amber-700 sm:text-lg dark:text-amber-300/90">
               {CELEBRATION.subtitle}
             </p>
 
-            <div
-              className={`w-full transition-all duration-400 ${
-                starrHidden ? "hidden" : starrFading ? "scale-50 opacity-0" : "opacity-100"
-              }`}
-            >
-              <StarrDrop stage={stage} onUpgrade={handleUpgrade} bumpSeed={bumpSeed} />
-            </div>
+            {/* Tras el revelado, la carta ocupa el hueco del StarrDrop,
+                junto a la foto, aprovechando el ancho de la columna */}
+            {letterRevealed ? (
+              <div className="w-full">
+                <SecretLetter revealed={letterRevealed} />
+              </div>
+            ) : (
+              <div
+                className={`w-full transition-all duration-400 ${
+                  starrFading ? "scale-95 opacity-0" : "opacity-100"
+                }`}
+              >
+                <StarrDrop stage={stage} onUpgrade={handleUpgrade} bumpSeed={bumpSeed} />
+              </div>
+            )}
           </div>
 
           {/* Columna de la foto (a la izquierda en PC, orden primero) */}
@@ -100,9 +106,6 @@ export function BirthdayCard() {
             <PhotoFrame />
           </div>
         </div>
-
-        {/* Carta revelada a ancho completo bajo el grid */}
-        <SecretLetter revealed={letterRevealed} />
       </div>
     </main>
   );

@@ -28,22 +28,22 @@ export const metadata: Metadata = {
 };
 
 /**
- * Aplica el tema guardado (o el oscuro por defecto) antes de pintar,
- * evitando el parpadeo de claro → oscuro al cargar.
+ * Aplica el tema guardado (o el claro por defecto) antes de pintar,
+ * evitando el parpadeo de oscuro → claro al cargar.
  */
-const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");var d=t?t!=="light":true;var r=document.documentElement;r.classList.toggle("dark",d);r.classList.toggle("light",!d);}catch(e){}})();`;
+const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");var d=t?t!=="light":false;var r=document.documentElement;r.classList.toggle("dark",d);r.classList.toggle("light",!d);}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${fredoka.variable} ${nunito.variable} dark`}
+      className={`${fredoka.variable} ${nunito.variable} light`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="bg-celebration-gradient font-sans flex min-h-screen flex-col justify-between text-slate-100 transition-colors duration-500">
+      <body className="bg-celebration-gradient font-sans flex min-h-screen flex-col justify-between text-slate-800 transition-colors duration-500 dark:text-slate-100">
         <AudioProvider>{children}</AudioProvider>
       </body>
     </html>

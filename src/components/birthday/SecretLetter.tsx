@@ -10,8 +10,8 @@ export function SecretLetter({ revealed }: Props) {
   return (
     <div
       aria-hidden={!revealed}
-      className={`mx-auto mt-10 max-w-2xl space-y-4 rounded-3xl border-2 border-amber-400/70 bg-gradient-to-b from-amber-50 to-orange-50 p-6 text-left text-sm leading-relaxed text-balance text-slate-800 shadow-[0_25px_60px_-18px_rgb(234,179,8,0.5)] backdrop-blur-xl transition-all duration-700 ease-out sm:p-8 sm:text-base md:text-lg dark:from-slate-900/90 dark:to-slate-900/70 dark:text-slate-200 ${
-        revealed ? "scale-100 opacity-100" : "hidden scale-90 opacity-0"
+      className={`mx-auto max-w-2xl space-y-4 rounded-3xl border-2 border-amber-400/70 bg-gradient-to-b from-amber-50 to-orange-50 p-6 text-left text-sm leading-relaxed text-balance text-slate-800 shadow-[0_25px_60px_-18px_rgb(234,179,8,0.5)] backdrop-blur-xl transition-all duration-700 ease-out sm:p-7 sm:text-base dark:from-slate-900/90 dark:to-slate-900/70 dark:text-slate-200 ${
+        revealed ? "scale-100 opacity-100" : "hidden scale-95 opacity-0"
       }`}
     >
       <div className="mb-4 text-center">

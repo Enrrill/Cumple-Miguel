@@ -60,7 +60,7 @@ export function StarrDrop({ stage, onUpgrade, bumpSeed }: Props) {
 
         {/* Caja de regalo */}
         <div
-          className={`relative my-4 animate-bounce text-8xl transition-all duration-300 drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] sm:text-9xl md:text-[9rem] ${rarity.glowClass}`}
+          className={`relative my-5 animate-gift-bounce text-8xl transition-all duration-300 drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] motion-reduce:!animate-none sm:text-9xl md:text-[9rem] ${rarity.glowClass}`}
           aria-hidden="true"
         >
           🎁

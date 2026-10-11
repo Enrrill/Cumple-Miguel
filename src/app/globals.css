@@ -20,6 +20,7 @@
   --animate-drift-a: drift-a 9s ease-in-out infinite;
   --animate-drift-b: drift-b 11s ease-in-out infinite;
   --animate-drift-c: drift-c 13s ease-in-out infinite;
+  --animate-gift-bounce: gift-bounce 2.2s ease-in-out infinite;
   --animate-sway: sway 6s ease-in-out infinite;
   --animate-sparkle: sparkle 2.4s ease-in-out infinite;
   --animate-shimmer: shimmer 3.5s ease-in-out infinite;
@@ -67,6 +68,17 @@
     }
     50% {
       transform: translateY(-8px);
+    }
+  }
+
+  /* Rebote del regalo con amplitud contenida (no invade el texto superior) */
+  @keyframes gift-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
     }
   }
 
