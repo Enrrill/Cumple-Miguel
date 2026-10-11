@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { fireCelebration, onCelebrate } from "@/lib/celebrate";
 import { createParticleEngine } from "@/lib/particles";
+import { playCelebration } from "@/lib/audio/sfx";
 
 /**
  * Lienzo fijo de fondo que dibuja fuegos artificiales y emojis flotantes.
@@ -18,7 +19,10 @@ export function ConfettiCanvas() {
     if (!canvas) return;
 
     const engine = createParticleEngine(canvas);
-    const unsubscribe = onCelebrate(({ x, y }) => engine.celebrate(x, y));
+    const unsubscribe = onCelebrate(({ x, y }) => {
+      engine.celebrate(x, y);
+      playCelebration();
+    });
 
     // Clic global: en cualquier parte excepto botones (evita doble disparo)
     const handleGlobalClick = (event: MouseEvent) => {

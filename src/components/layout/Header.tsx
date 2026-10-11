@@ -1,4 +1,5 @@
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { MusicToggle } from "@/components/ui/MusicToggle";
 import { CELEBRATION } from "@/lib/constants";
 
 /** Cabecera con el título de la celebración y los controles. */
@@ -19,7 +20,10 @@ export function Header() {
         </div>
       </div>
 
-      <ThemeToggle />
+      <div className="flex items-center gap-3">
+        <MusicToggle />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

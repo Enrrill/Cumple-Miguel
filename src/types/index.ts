@@ -7,4 +7,6 @@ export interface StarrRarity {
   badgeClass: string;
   glowClass: string;
   hint: string;
+  /** Frecuencia base (Hz) del arpegio de mejora para esta rareza. */
+  pitch: number;
 }

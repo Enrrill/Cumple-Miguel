@@ -9,6 +9,7 @@ import { StarrDrop } from "@/components/birthday/StarrDrop";
 import { useStarrDrop } from "@/hooks/useStarrDrop";
 import { fireCelebration } from "@/lib/celebrate";
 import { CELEBRATION, FINAL_STAGE } from "@/lib/constants";
+import { playReveal, playUpgrade } from "@/lib/audio/sfx";
 
 /**
  * Tarjeta principal de cristal: contiene todo el contenido de la página.
@@ -28,10 +29,12 @@ export function BirthdayCard() {
   const handleUpgrade = () => {
     if (isComplete) return;
 
+    const nextStage = stage + 1;
     upgrade();
     setBumpSeed((n) => n + 1);
+    playUpgrade(nextStage);
 
-    if (stage + 1 === FINAL_STAGE) {
+    if (nextStage === FINAL_STAGE) {
       // Secuencia: fundir el Starr Drop y revelar la carta con fuegos artificiales
       timers.current.push(
         setTimeout(() => {
@@ -41,6 +44,7 @@ export function BirthdayCard() {
             setTimeout(() => {
               setStarrHidden(true);
               setLetterRevealed(true);
+              playReveal();
 
               const { innerWidth: w, innerHeight: h } = window;
               fireCelebration(w / 2, h / 3);

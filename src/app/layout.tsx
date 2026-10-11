@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 
+import { AudioProvider } from "@/components/audio/AudioProvider";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -38,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="bg-celebration-gradient font-sans flex min-h-screen flex-col justify-between text-slate-100 transition-colors duration-500">
-        {children}
+        <AudioProvider>{children}</AudioProvider>
       </body>
     </html>
   );
